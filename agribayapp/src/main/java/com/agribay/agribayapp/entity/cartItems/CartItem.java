@@ -3,7 +3,7 @@ package com.agribay.agribayapp.entity.cartItems;
 import javax.persistence.Entity;
 
 @Entity
-public class CartItems {
+public class CartItem {
 
 	private int cartId;
 	
@@ -35,6 +35,14 @@ public class CartItems {
 
 	private Customer customer;
 	
-	
+	private int quantity;
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	
 }
