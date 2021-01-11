@@ -11,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -26,6 +30,7 @@ public class Product {
 
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "seller_id"))
+	@JsonIdentityReference(alwaysAsId = true)
 	private User seller;
 
 	@Column(length = 512, nullable = false)
@@ -50,8 +55,10 @@ public class Product {
 
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "item_id", foreignKey = @ForeignKey(name = "item_id"))
-	@JsonIdentityReference(alwaysAsId = true)
 	private Item item;
+
+	@Transient
+	private BigDecimal totalPrice;
 
 	public Product() {
 		super();
@@ -134,5 +141,24 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	@PostLoad
+	@PostPersist
+	@PostUpdate
+	private void updateTotalPrice() {
+		this.totalPrice = this.getUnitPrice().multiply(this.getTotalQuantity());
 	}
 }

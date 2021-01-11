@@ -7,14 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "item")
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
