@@ -1,4 +1,4 @@
-package com.agribay.signup_Signin.service;
+package com.agribay.agribayapp.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +9,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.agribay.signup_Signin.exception.SpringAgribayException;
-import com.agribay.signup_Signin.model.NotificationEmail;
+import com.agribay.agribayapp.exception.SpringAgribayException;
+import com.agribay.agribayapp.model.NotificationEmail;
+
+
 
 @Service
 @AllArgsConstructor
@@ -24,7 +26,7 @@ class MailService {
     void sendMail(NotificationEmail notificationEmail) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("anurahsrivastava0009@gmail.com");
+            messageHelper.setFrom("anuragsrivastava0009@gmail.com");
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
             messageHelper.setText(notificationEmail.getBody());

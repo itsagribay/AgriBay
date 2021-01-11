@@ -1,0 +1,36 @@
+1. to see the status of files
+
+- git status
+
+
+2. to clone a repo
+
+- git clone fileLink
+
+
+3. to see branch after cloning
+
+- git branch
+
+ // git only clone master branch by default and if you want to see other
+    branches ... command
+      
+         - git branch -a
+
+   // to switch to the branch 
+            - git checkout branchName
+
+4. login to git command
+
+- $ git config --global user.name "name"
+
+- $ git config --global user.email "gitub email"
+
+
+5. $ git fetch <remote-repo> <remote-branch>:<local-branch>
+   $ git checkout <local-branch>  
+
+6. To track all untracked files
+   git add *
+
+7.  

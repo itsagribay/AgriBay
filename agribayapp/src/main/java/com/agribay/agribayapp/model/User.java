@@ -1,4 +1,4 @@
-package com.agribay.signup_Signin.model;
+package com.agribay.agribayapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

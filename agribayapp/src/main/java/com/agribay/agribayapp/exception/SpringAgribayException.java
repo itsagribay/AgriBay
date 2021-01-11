@@ -1,4 +1,4 @@
-package com.agribay.signup_Signin.exception;
+package com.agribay.agribayapp.exception;
 
 public class SpringAgribayException extends RuntimeException {
     public SpringAgribayException(String exMessage, Exception exception) {
