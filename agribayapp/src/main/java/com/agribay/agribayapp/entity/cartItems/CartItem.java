@@ -1,13 +1,36 @@
 package com.agribay.agribayapp.entity.cartItems;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CartItem {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@column
 	private int cartId;
 	
+	@Column
+	@JoinColumn
+	@OneToMany
 	private Product product;
+	
+	@Column
+	@JoinColumn
+	@OneToOne
+	private Customer customer;
+	
+	@Column
+	private int quantity;
+	
+	
 	
 	public int getCartId() {
 		return cartId;
@@ -19,6 +42,9 @@ public class CartItem {
 
 	public Product getProduct() {
 		return product;
+	}
+
+	public CartItem() {
 	}
 
 	public void setProduct(Product product) {
@@ -33,9 +59,6 @@ public class CartItem {
 		this.customer = customer;
 	}
 
-	private Customer customer;
-	
-	private int quantity;
 
 	public int getQuantity() {
 		return quantity;
