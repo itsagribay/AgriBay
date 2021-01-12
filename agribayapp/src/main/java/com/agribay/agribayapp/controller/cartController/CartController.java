@@ -31,7 +31,7 @@ public class CartController {
 	}
 
 	@PostMapping("/cartitems")
-	public Employee update(@RequestBody Employee theEmployee) {
+	public Customer update(@RequestBody Customer customer) {
 		return cartService.save(theEmployee);
 	}
 
@@ -39,7 +39,7 @@ public class CartController {
 	public String deleteEmployee(@PathVariable int customerid) {
 	Customer tempCustomer = cartService.deleteById(customerid);
 
-	employeeService.deleteById(customerid);
+	cartService.deleteById(customerid);
 
 	return "Deleted item id=" + customerid;
 
