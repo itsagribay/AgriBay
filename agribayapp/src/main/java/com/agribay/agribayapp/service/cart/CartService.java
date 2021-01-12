@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.agribay.agribayapp.entity.cartItems.CartItem;
 import com.agribay.agribayapp.repository.cartRepository.CartItemRepository;
-import com.luv2code.springboot.cruddemo.entity.Employee;
 
 @Service
 public class CartService {
@@ -16,9 +15,9 @@ public class CartService {
 	@Autowired
 	private CartItemRepository cartRepo;
 	
-	public List<CartItem> listCartItems(Customer customer)
+	public List<CartItem> listCartItems(int id)
 	{
-		return cartRepo.findByCustomer(customer);
+		return cartRepo.findAll();
 	}
 	
 	

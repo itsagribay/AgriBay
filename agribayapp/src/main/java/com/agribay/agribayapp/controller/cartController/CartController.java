@@ -26,13 +26,13 @@ public class CartController {
 	}
 
 	@GetMapping("/cartitems")
-	public List<CartItem> findall(Customer customer) {
-		return cartService.listCartItems(customer);
+	public List<CartItem> findall(int id) {
+		return cartService.listCartItems(id);
 	}
 
 	@PostMapping("/cartitems")
 	public Customer update(@RequestBody Customer customer) {
-		return cartService.save(theEmployee);
+		return cartService.save(customer);
 	}
 
 	@DeleteMapping("/cartitems/{customerid}")
