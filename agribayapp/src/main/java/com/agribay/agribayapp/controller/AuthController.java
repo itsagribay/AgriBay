@@ -5,15 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import com.agribay.agribayapp.dto.AuthenticationResponse;
+import com.agribay.agribayapp.dto.LoginRequest;
 import com.agribay.agribayapp.dto.RegisterRequest;
 import com.agribay.agribayapp.service.AuthService;
 
-/*import com.agribay.signup_Signin.dto.AuthenticationResponse;
-import com.agribay.signup_Signin.dto.LoginRequest;
-import com.agribay.signup_Signin.dto.RefreshTokenRequest;
-import com.agribay.signup_Signin.dto.RegisterRequest;
-import com.agribay.signup_Signin.service.AuthService;
-import com.agribay.signup_Signin.service.RefreshTokenService;*/
 
 
 //import javax.validation.Valid;
@@ -43,15 +39,20 @@ public class AuthController {
 		
     }
 
-	/*
-	 * @GetMapping("accountVerification/{token}") public ResponseEntity<String>
-	 * verifyAccount(@PathVariable String token) { authService.verifyAccount(token);
-	 * return new ResponseEntity<>("Account Activated Successfully", OK); }
-	 * 
-	 * @PostMapping("/login") public AuthenticationResponse login(@RequestBody
-	 * LoginRequest loginRequest) { return authService.login(loginRequest); }
-	 * 
-	 * @PostMapping("/refresh/token") public AuthenticationResponse
+	
+	 @GetMapping("accountVerification/{token}")     
+	 public ResponseEntity<String> verifyAccount(@PathVariable String token) 
+	 {
+		 authService.verifyAccount(token);
+	     return new ResponseEntity<>("Account Activated Successfully", HttpStatus.OK);
+	 }
+	 
+	@PostMapping("/login") 
+	public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+		return authService.login(loginRequest);
+		}
+	 
+	/* @PostMapping("/refresh/token") public AuthenticationResponse
 	 * refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
 	 * return authService.refreshToken(refreshTokenRequest); }
 	 * 

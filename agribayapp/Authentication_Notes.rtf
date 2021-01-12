@@ -1,5 +1,5 @@
-{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Cambria Math;}}
-{\colortbl ;\red0\green0\blue255;}
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Cambria Math;}{\f3\fnil Consolas;}}
+{\colortbl ;\red0\green0\blue255;\red199\green221\blue12;\red111\green197\blue238;\red216\green216\blue216;\red255\green198\blue0;}
 {\*\generator Riched20 10.0.19041}{\*\mmathPr\mmathFont2\mwrapIndent1440 }\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\f0\fs22\lang9\par
 \b Agribay Project\par
@@ -38785,7 +38785,7 @@ Disadvantage of Autowiring\par
 \b0 - No control of programmer.\par
 - It can't be used for primitive and string values.\par
 see the examples of autowiring\par
-{{\field{\*\fldinst{HYPERLINK https://www.baeldung.com/spring-autowire }}{\fldrslt{https\f2 ://\f0 www\f2 .\f0 baeldung\f2 .\f0 com\f2 /\f0 spring\f2 -\f0 autowire\ul0\cf0}}}}\f0\fs22\lang9\par
+{{\field{\*\fldinst{HYPERLINK https://www.baeldung.com/spring-autowire }}{\fldrslt{https\f2 ://\f0 www\f2 .\f0 baeldung\f2 .\f0 com\f2 /\f0 spring\f2 -\f0 autowire\ul0\cf0}}}}\f0\fs22\par
 {{\field{\*\fldinst{HYPERLINK https://www.javatpoint.com/autowiring-in-spring#:~:text=Autowiring%20feature%20of%20spring%20framework%20enables%20you%20to,write%20the%20code%20to%20inject%20the%20dependency%20explicitly }}{\fldrslt{https://www.javatpoint.com/autowiring-in-spring#:~:text=Autowiring%20feature%20of%20spring%20framework%20enables%20you%20to,write%20the%20code%20to%20inject%20the%20dependency%20explicitly\ul0\cf0}}}}\f0\fs22 .\par
 \par
 - now in class  AuthService.java and @Autowired the PasswordEncoder and call the encode method of PasswordEncoder i.e passwordEncoder() in setPassword field\par
@@ -38831,6 +38831,74 @@ for logging , we used @SLF4J annotation from lombok which will create an instanc
 - we used try catch block to handle the exception related to email send or not \par
 - Now we used \b SpringAgribayException.java class \b0 to handle the exception and inside catch block we are throwing a object of this class with message.\par
 - in  \b SpringAgribayException.java \b0 we  extends RuntimeException and created a method SpringAgribayException() which takes the exception message as input and then call the super() and passing the exception message .\par
+\par
+\par
+=> Now time to \b send email for verification \b0\par
+- we use for POC a fake smtp server using mailtrap.io, after having all the poc of authentication , we will use the gmail one.\par
+in aplication.properties, we have to write the smtp properties\par
+for eg.\par
+\cf2\f3\fs28 ############# Mail Properties ###########################################\cf0\par
+\cf3\ul spring.mail.host\cf4\ulnone =\cf5 smtp.mailtrap.io\cf0\par
+\cf4 spring.mail.port=\cf5 25\cf0\par
+\cf4 spring.mail.username=\cf5 7984a002f26364\cf0\par
+\cf4 spring.mail.password=\cf5 7fdb1b4fed1a6f\cf0\par
+\cf4 spring.mail.protocol=\cf5\ul smtp\cf0\ulnone\f0\fs22\par
+\par
+after configuring the smtp server details. go to AuthService.java class and inject the MailService class and after generateVerificationToken() method we send mail using sendMail() method in which we are passing object of type \b NotificationEmail(" message ", recipient email address, body: "messgae and activation link" + token )\par
+\b0 - activation link redirects the user to our server and we append the token                        ***\b\par
+- token appended is a verification token and whenever the user click on this activiation url and go to our server , then we check the token from the url parameter and look it up in our DB then fetch the user who created this token and enable that user.\par
+-\b0  now, for signup , we have to call the sigup method from AuthController \par
+- in AuthController , we inject the AuthService class and call this signup method \par
+- so if the registartion is successfull , user will get the message of successfull registration.\par
+we can do this just by return responseEntity object in which first argument is message and second is HttpStatus.OK\par
+\par
+- \b In DB\b0 , we created a database name agribay which has table user \par
+mysql> create table user (user_id int auto_increment, created date, email varchar(30), enabled int, password varchar(100), username varchar(50),primary key (user_id));\par
+Query OK, 0 rows affected (0.58 sec)\par
+mysql> select * from user;\par
++---------+------------+---------------+---------+----------------+---------------+\par
+| user_id | created    | email         | enabled | password       | username |\par
++---------+------------+---------------+---------+----------------+---------------+\par
+|       1 | 0002-03-20 | abc@gmail.com |       1 | bdhasbdhgh2e3e | abc |\par
++---- --+---------------+---------------------+-------+---------------------+------+  \par
+\par
+    - \b user_id = \b0 auto incremented and primary key as well.\par
+   - \b created = \b0 date on which user registered\par
+      - \b enabled = \b0 user successfully authenticated or not\par
+    - \b password = \b0 will be\b  \b0 encoded\par
+\par
+==========================================================================\par
+12-01-21\par
+\b User verification \par
+=> \b0 now inside the AuthController.java , we create an endpoint which contains @getMapping with value as "accoutnVerification/\{token\}"  here token acts as a path variable i.e @PathVariable.\par
+we create a method verifyToken() which return ResponseEntity<String> object and we passing the token as argument .\par
+- these following methods are used to verify user using token\par
+      -AuthController->  verifyAccount() \par
+      -Authservice -> verifyAccount() , fetchUserAndEnable()  \par
+\par
+\b Asynchronus Processing\par
+=>\b0  Our API called to register user took approx. 5 - 10 sec to complete , which is a big time\par
+     this happens because we have sending a verification email after storing the user in DB .\par
+    this kind of operation are verify expensive and take time to complete , so as we are contacting an external email server so there will be delay.\par
+- in this case , we can execute the code which send the email as  Asynchronusly by this part in different thread .\par
+- In Spring , running the code asynchronusly is not so difficult because spring provides us with synchronusly capabilities .\par
+to enable this , you have to add @EnableAsync to the class containing main method and then use @Async annotaion on the mail sending part.\par
+{{\field{\*\fldinst{HYPERLINK https://spring.io/guides/gs/async-method/ }}{\fldrslt{https://spring.io/guides/gs/async-method/\ul0\cf0}}}}\f0\fs22\par
+- this Async processing will reduce the API call to 300ms to 1 sec.\par
+Alternate way to do this is Message Queues like Active Queues , they provide reliabilty.\par
+ we are not using it to because are application  is simple and small.\par
+\par
+=====================================================================\par
+\par
+\b User Authentication with JWT\par
+=>\b0     \par
+        our Authentication flow\par
+       flow 1\par
+       flow 2\par
+                            \par
+       \b\par
+\b0    \par
+\par
 \par
     \par
 }

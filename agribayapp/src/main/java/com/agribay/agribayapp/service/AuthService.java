@@ -13,25 +13,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-/*
-import com.agribay.signup_Signin.dto.AuthenticationResponse;
-import com.agribay.signup_Signin.dto.LoginRequest;
-import com.agribay.signup_Signin.dto.RefreshTokenRequest;
-import com.agribay.signup_Signin.dto.RegisterRequest;
-import com.agribay.signup_Signin.exception.SpringAgribayException;
-import com.agribay.signup_Signin.model.NotificationEmail;
-import com.agribay.signup_Signin.model.User;
-import com.agribay.signup_Signin.model.VerificationToken;
-import com.agribay.signup_Signin.repository.UserRepository;
-import com.agribay.signup_Signin.repository.VerificationTokenRepository;
-import com.agribay.signup_Signin.security.JwtProvider;*/
 
+import com.agribay.agribayapp.dto.AuthenticationResponse;
+import com.agribay.agribayapp.dto.LoginRequest;
 import com.agribay.agribayapp.dto.RegisterRequest;
+import com.agribay.agribayapp.exception.SpringAgribayException;
 import com.agribay.agribayapp.model.NotificationEmail;
 import com.agribay.agribayapp.model.User;
 import com.agribay.agribayapp.model.VerificationToken;
 import com.agribay.agribayapp.repository.UserRepository;
 import com.agribay.agribayapp.repository.VerificationTokenRepository;
+import com.agribay.agribayapp.security.JwtProvider;
 
 import lombok.AllArgsConstructor;
 
@@ -43,10 +35,10 @@ public class AuthService {
 	 private final UserRepository userRepository; 
 	 private final VerificationTokenRepository verificationTokenRepository; 
 	 private final MailService mailService; 
-	 /* private
-	 * final AuthenticationManager authenticationManager; private final JwtProvider
-	 * jwtProvider; private final RefreshTokenService refreshTokenService;
-	 */
+	 private final AuthenticationManager authenticationManager; 
+	 private final JwtProvider jwtProvider;
+	 //private final RefreshTokenService refreshTokenService;
+	 
 	
 
 	@Transactional
@@ -70,13 +62,9 @@ public class AuthService {
 
 }
 
-//  private void fetchUserAndEnable(VerificationToken verificationToken) { String
-//            username = verificationToken.getUser().getUsername();
-//  User user = userRepository.findByUsername(username).orElseThrow(() -> new
-//  SpringAgribayException("User not found with name - " + username));
-//  user.setEnabled(true); userRepository.save(user); }
-//  
-  private String generateVerificationToken(User user) { 
+
+  
+  private String generateVerificationToken(User user) {  
 	  String token = UUID.randomUUID().toString(); 
 	  VerificationToken verificationToken = new VerificationToken();
 	  verificationToken.setToken(token);
@@ -85,24 +73,31 @@ public class AuthService {
        verificationTokenRepository.save(verificationToken);
          return token;
       }
- /* 
- * public void verifyAccount(String token) { Optional<VerificationToken>
- * verificationToken = verificationTokenRepository.findByToken(token);
- * fetchUserAndEnable(verificationToken.orElseThrow(() -> new
- * SpringAgribayException("Invalid Token"))); }
- * 
- * public AuthenticationResponse login(LoginRequest loginRequest) {
- * Authentication authenticate = authenticationManager.authenticate(new
- * UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
- * loginRequest.getPassword()));
- * SecurityContextHolder.getContext().setAuthentication(authenticate); String
- * token = jwtProvider.generateToken(authenticate); return
- * AuthenticationResponse.builder() .authenticationToken(token)
- * .refreshToken(refreshTokenService.generateRefreshToken().getToken())
- * .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
- * .username(loginRequest.getUsername()) .build(); }
- * 
- * public AuthenticationResponse refreshToken(RefreshTokenRequest
+ 
+   public void verifyAccount(String token) {     // here we query the verificationTokenRepository by the given token   
+	      Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);   // this will check the token present in DB(token) or not
+          fetchUserAndEnable(verificationToken.orElseThrow(() -> new SpringAgribayException("Invalid Token"))); // if token not found, it will throw the custom exception "invalid token" or if found , it will enable the user
+                
+   }
+   
+   @Transactional  
+   private void fetchUserAndEnable(VerificationToken verificationToken) { // it will takethe verificationToken and find by username, if found it will enable the user else throw exception... 
+  	 String username = verificationToken.getUser().getUsername();
+       User user = userRepository.findByUsername(username).orElseThrow(() -> new  SpringAgribayException("User not found with name - " + username));
+           user.setEnabled(true); 
+           userRepository.save(user);
+           }
+  
+  public AuthenticationResponse login(LoginRequest loginRequest) {
+           Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+           SecurityContextHolder.getContext().setAuthentication(authenticate); 
+           String token = jwtProvider.generateToken(authenticate);
+           
+           return new AuthenticationResponse(token, loginRequest.getUsername());
+          // return AuthenticationResponse.builder().authenticationToken(token).refreshToken(refreshTokenService.generateRefreshToken().getToken()).expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())).username(loginRequest.getUsername()).build(); 
+           }
+  
+ /* public AuthenticationResponse refreshToken(RefreshTokenRequest
  * refreshTokenRequest) {
  * refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken(
  * )); String token =
