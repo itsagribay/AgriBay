@@ -25,12 +25,13 @@ public class CartController {
 		this.cartService = cartService;
 	}
 
-	@GetMapping("/cartitems")
-	public List<CartItem> findall(int id) {
-		return cartService.listCartItems(id);
+	
+	@GetMapping("/cartitems{customerid}")
+	public List<CartItem> findall(@PathVariable int customer) {
+		return cartService.listCartItems(customer);
 	}
 
-	@PostMapping("/cartitems")
+	@PostMapping("/cartitems") /// Adding to the cart and updating the cart
 	public Customer update(@RequestBody Customer customer) {
 		return cartService.save(customer);
 	}
