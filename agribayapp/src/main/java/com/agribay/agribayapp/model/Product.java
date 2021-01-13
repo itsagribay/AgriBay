@@ -37,11 +37,11 @@ public class Product {
 	private String sellerAddress;
 
 	@Column(length = 7, scale = 2, nullable = false, columnDefinition = "Decimal(7,2) default '0.00'")
-	// CONSTRAINT price_gte_0 CHECK (base_price >= 0)
+	// TODO: CONSTRAINT price_gte_0 CHECK (base_price >= 0)
 	private BigDecimal unitPrice;
 
 	@Column(length = 6, scale = 3, nullable = false, columnDefinition = "Decimal(6,3) default '0.000'")
-	// CONSTRAINT quantity_gte_0 CHECK (total_quantity >= 0)
+	// TODO: CONSTRAINT quantity_gte_0 CHECK (total_quantity >= 0)
 	private BigDecimal totalQuantity;
 
 	@Column(length = 100)
@@ -62,7 +62,6 @@ public class Product {
 
 	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Product(Long id, User seller, String sellerAddress, BigDecimal unitPrice, BigDecimal totalQuantity,

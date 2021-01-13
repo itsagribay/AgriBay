@@ -1,5 +1,9 @@
 package com.agribay.agribayapp.service;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +28,17 @@ public class ProductService {
 		this.productRepository = productRepository;
 	}
 
-	public Page<Product> getProducts(int pageNo, int pageSize) {
-		PageRequest page = PageRequest.of(pageNo, pageSize);
-		return productRepository.findAll(page);
-	}
-
 	public ResponseEntity<Product> getProductById(Long id) {
 		Optional<Product> optionalProduct = productRepository.findById(id);
 		if (optionalProduct.isPresent()) {
 			return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	public Page<Product> getProducts(int pageNo, int pageSize) {
+		PageRequest page = PageRequest.of(pageNo, pageSize);
+		return productRepository.findAll(page);
 	}
 
 	public Page<Product> getProductsByItemName(String itemName, int pageNo, int pageSize) {
@@ -51,5 +55,16 @@ public class ProductService {
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<Page<Product>>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	public Iterable<Product> getAllProducts() {
+		return productRepository.findAll();
+	}
+
+	public Map<String, List<ItemCategory>> getAllProductCategories() {
+		List<ItemCategory> itemCategoryList = Arrays.asList(ItemCategory.values());
+		Map<String, List<ItemCategory>> categories = new HashMap<>();
+		categories.put("categories", itemCategoryList);
+		return categories;
 	}
 }
