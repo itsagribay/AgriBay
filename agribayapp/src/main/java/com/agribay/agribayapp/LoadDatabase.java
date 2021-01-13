@@ -40,10 +40,10 @@ class LoadDatabase {
 			log.info("Preloading " + itemRepository.save(item1));
 			log.info("Preloading " + itemRepository.save(item2));
 
-			Product product1 = new Product((long) 5, user1, "", new BigDecimal("20"), new BigDecimal("4"), "", "",
-					"some desc here", item1);
-			Product product2 = new Product((long) 6, user2, "", new BigDecimal("30"), new BigDecimal("3"), "", "",
-					"some desc here", item2);
+			Product product1 = new Product((long) 5, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+					"assets/images/products/placeholder.png", "", "some desc here", item1);
+			Product product2 = new Product((long) 6, user2, "", new BigDecimal("30"), new BigDecimal("3"),
+					"assets/images/products/placeholder.png", "", "some desc here", item2);
 			log.info("Preloading " + productRepository.save(product1));
 			log.info("Preloading " + productRepository.save(product2));
 		};
