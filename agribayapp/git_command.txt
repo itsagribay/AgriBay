@@ -24,6 +24,7 @@
 
 - $ git config --global user.name "name"
 
+
 - $ git config --global user.email "gitub email"
 
 
@@ -33,4 +34,75 @@
 6. To track all untracked files
    git add *
 
-7.  
+7.
+
+
+
+=========================================================================
+    command to create key  (valid for 90 days)
+
+
+Microsoft Windows [Version 10.0.19042.685]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>keyto
+ol -genkey -alias agribay -keyalg RSA -keystore agribay.jks -keysize 2048
+Enter keystore password:
+Keystore password is too short - must be at least 6 characters
+Enter keystore password:changeit
+Re-enter new password:changeit
+What is your first and last name?
+  [Unknown]:  anurag
+What is the name of your organizational unit?
+  [Unknown]:  cdac
+What is the name of your organization?
+  [Unknown]:  cdackp
+What is the name of your City or Locality?
+  [Unknown]:
+What is the name of your State or Province?
+  [Unknown]:
+What is the two-letter country code for this unit?
+  [Unknown]:
+Is CN=anurag, OU=cdac, O=cdackp, L=Unknown, ST=Unknown, C=Unknown correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+        for: CN=anurag, OU=cdac, O=cdackp, L=Unknown, ST=Unknown, C=Unknown
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>#keyt
+ool
+'#keytool' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>java
+keystore #keytool
+Error: Could not find or load main class keystore
+Caused by: java.lang.ClassNotFoundException: keystore
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>ls
+'ls' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>ls
+'ls' is not recognized as an internal or external command,
+operable program or batch file.
+
+operable program or batch file.
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>keytool -importkeystore -src
+keystore agribay.jks -destkeystore agribay.jks -deststoretype pkcs12
+Enter source keystore password:
+Entry for alias agribay successfully imported.
+Import command completed:  1 entries successfully imported, 0 entries failed or cancelled
+
+Warning:
+The original keystore "agribay.jks" is backed up as "agribay.jks.old"...
+
+C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_master\AgriBay\agribayapp>
+
+
+
+
+=========================================================================  

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.agribay.agribayapp.dto.AuthenticationResponse;
 import com.agribay.agribayapp.dto.LoginRequest;
+import com.agribay.agribayapp.dto.RefreshTokenRequest;
 import com.agribay.agribayapp.dto.RegisterRequest;
 import com.agribay.agribayapp.exception.SpringAgribayException;
 import com.agribay.agribayapp.model.NotificationEmail;
@@ -26,9 +27,11 @@ import com.agribay.agribayapp.repository.VerificationTokenRepository;
 import com.agribay.agribayapp.security.JwtProvider;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthService {
 		
 	 private final PasswordEncoder passwordEncoder;
@@ -37,7 +40,7 @@ public class AuthService {
 	 private final MailService mailService; 
 	 private final AuthenticationManager authenticationManager; 
 	 private final JwtProvider jwtProvider;
-	 //private final RefreshTokenService refreshTokenService;
+	 private final RefreshTokenService refreshTokenService;
 	 
 	
 
@@ -90,24 +93,27 @@ public class AuthService {
   
   public AuthenticationResponse login(LoginRequest loginRequest) {
            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
-           SecurityContextHolder.getContext().setAuthentication(authenticate); 
-           String token = jwtProvider.generateToken(authenticate);
+          log.info("2. we get username : {} and password : {} ",loginRequest.getUsername(),loginRequest.getPassword() );
            
-           return new AuthenticationResponse(token, loginRequest.getUsername());
-          // return AuthenticationResponse.builder().authenticationToken(token).refreshToken(refreshTokenService.generateRefreshToken().getToken()).expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())).username(loginRequest.getUsername()).build(); 
+           SecurityContextHolder.getContext().setAuthentication(authenticate); 
+           log.info("3. Authenticated object {} :", authenticate);
+            
+           String token = jwtProvider.generateToken(authenticate);
+          
+           log.info("5. token generated {} and return to AuthResponse", token);
+           log.info("6. refresh token passed as empty string so if we performed login , we get one Json web token , one refresh token and expiry date" );
+           //return new AuthenticationResponse(token, loginRequest.getUsername());
+           return AuthenticationResponse.builder().authenticationToken(token).refreshToken(refreshTokenService.generateRefreshToken().getToken()).expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())).username(loginRequest.getUsername()).build(); 
            }
   
- /* public AuthenticationResponse refreshToken(RefreshTokenRequest
- * refreshTokenRequest) {
- * refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken(
- * )); String token =
- * jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
- * return AuthenticationResponse.builder() .authenticationToken(token)
- * .refreshToken(refreshTokenRequest.getRefreshToken())
- * .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
- * .username(refreshTokenRequest.getUsername()) .build(); }
- * 
- * public boolean isLoggedIn() { Authentication authentication =
+  public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+       refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+       String token = jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
+        log.info("here we validate refreshToken, if success , this will generate new refreshToken with username{}: ",token);
+       return AuthenticationResponse.builder().authenticationToken(token).refreshToken(refreshTokenRequest.getRefreshToken()).expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())).username(refreshTokenRequest.getUsername()).build(); 
+       }
+ 
+/* public boolean isLoggedIn() { Authentication authentication =
  * SecurityContextHolder.getContext().getAuthentication(); return
  * !(authentication instanceof AnonymousAuthenticationToken) &&
  * authentication.isAuthenticated(); }

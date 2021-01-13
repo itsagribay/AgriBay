@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.agribay.agribayapp.security.JwtAuthenticationFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	 private final UserDetailsService userDetailsService;
+	 private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	 
 
 	    @Bean(BeanIds.AUTHENTICATION_MANAGER)               // Bean created to provide implementation to AuthenticationManager
@@ -46,9 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					 */ .permitAll()
 	                .anyRequest()
 	                .authenticated();
-	       /* httpSecurity.addFilterBefore(jwtAuthenticationFilter,
-	                UsernamePasswordAuthenticationFilter.class);
-	   */ }
+	                httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	    }
 	 
 	    @Autowired
 	    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
