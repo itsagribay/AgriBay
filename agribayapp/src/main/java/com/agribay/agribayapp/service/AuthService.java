@@ -47,9 +47,13 @@ public class AuthService {
 	@Transactional
 	public void signup(RegisterRequest registerRequest) {
         User user = new User();
+        log.info("2. Registration request got");
         user.setUsername(registerRequest.getUsername());
+        log.info("3. Username {} ",registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
+        log.info("4. Email {} ",registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        log.info("5. Password {} ",registerRequest.getPassword());
         user.setCreated(Instant.now());
         user.setEnabled(false);
         
@@ -61,7 +65,7 @@ public class AuthService {
 		 "Thank you for signing up to Agribay, " +
 		 "please click on the below url to activate your account : " +
 		 "http://localhost:8080/api/auth/accountVerification/" + token));
-		
+		 log.info("6. mail sent to email  {} ",registerRequest.getEmail());
 
 }
 
@@ -72,7 +76,7 @@ public class AuthService {
 	  VerificationToken verificationToken = new VerificationToken();
 	  verificationToken.setToken(token);
       verificationToken.setUser(user);
-  
+      log.info("7. verification token generated , token {} ",token);
        verificationTokenRepository.save(verificationToken);
          return token;
       }

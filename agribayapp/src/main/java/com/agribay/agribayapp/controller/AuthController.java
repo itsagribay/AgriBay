@@ -37,11 +37,12 @@ public class AuthController {
 	 private final AuthService authService;
 	 private final RefreshTokenService refreshTokenService;
 	
+	@CrossOrigin( origins = "http://localhost:4200") 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
 		
 		 authService.signup(registerRequest);
-		 BodyBuilder builder = (BodyBuilder) ResponseEntity.ok();
+		 log.info("1. signup process started");
 		 return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
 		
     }

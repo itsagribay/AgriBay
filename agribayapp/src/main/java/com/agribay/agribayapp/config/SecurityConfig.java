@@ -39,13 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                .csrf().disable()
 	                .authorizeRequests()
 	                .antMatchers("/api/auth/**")       // authencticate all the request which doen't match this pattern
-					/*
-					 * .permitAll() .antMatchers(HttpMethod.GET, "/api/subreddit") .permitAll()
-					 * .antMatchers(HttpMethod.GET, "/api/posts/") .permitAll()
-					 * .antMatchers(HttpMethod.GET, "/api/posts/**") .permitAll()
-					 * .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-					 * "/configuration/security", "/swagger-ui.html", "/webjars/**")
-					 */ .permitAll()
+	                .permitAll().antMatchers(HttpMethod.GET, "/api/auth") .permitAll()
+					.antMatchers(HttpMethod.GET, "/api/products/") .permitAll()     // these should be GET call so that spring will not authorize these everytime and guest can see these pages without login
+ 					.antMatchers(HttpMethod.GET, "/api/cart/**") .permitAll()
+					.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+					 "/configuration/security", "/swagger-ui.html", "/webjars/**")
+					.permitAll()
 	                .anyRequest()
 	                .authenticated();
 	                httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
