@@ -1,10 +1,15 @@
 package com.agribay.agribayapp.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -32,5 +37,19 @@ public class Customer {
 	
 	@Column(name="mobile_number")
 	private String mobileNumber;
+	
+	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+	private Set<Order> orders = new HashSet<>();
+	
+	public void add(Order order) {
+		if(order != null) {
+			if(order == null) {
+				orders = new HashSet<>();
+			}
+			orders.add(order);
+			order.setCustomer(this);
+		}
+	}
+	
 	
 }
