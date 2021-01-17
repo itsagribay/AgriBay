@@ -1,11 +1,14 @@
 package com.agribay.agribayapp.exception;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class SpringAgribayException extends RuntimeException {
     public SpringAgribayException(String exMessage, Exception exception) {
-        super(exMessage, exception);
+        log.error(exMessage,exception);
     }
 
     public SpringAgribayException(String exMessage) {
-        super(exMessage);
+        log.error(exMessage);
     }
 }

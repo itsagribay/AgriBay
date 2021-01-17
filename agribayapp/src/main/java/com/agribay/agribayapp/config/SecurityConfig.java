@@ -17,10 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.agribay.agribayapp.security.JwtAuthenticationFilter;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@EnableWebSecurity
-@AllArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity         // this will enables the web security module in our project
+@AllArgsConstructor        
+@Slf4j
+public class SecurityConfig extends WebSecurityConfigurerAdapter {    // this class holds the complete security configuration of our application
 
 	 private final UserDetailsService userDetailsService;
 	 private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -34,16 +36,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	 
 	 @Override
-	    public void configure(HttpSecurity httpSecurity) throws Exception {
+	    public void configure(HttpSecurity httpSecurity) throws Exception {    //we are configuring Spring to allow all the requests which match the endpoint “/api/auth/**” , as these endpoints are used for authentication and registration we don’t expect the user to be authenticated at that point of time.
 	        httpSecurity.cors().and()
-	                .csrf().disable()
+	                .csrf().disable()        
 	                .authorizeRequests()
 	                .antMatchers("/api/auth/**")       // authencticate all the request which doen't match this pattern
 	                .permitAll().antMatchers(HttpMethod.GET, "/api/auth") .permitAll()
 					.antMatchers(HttpMethod.GET, "/api/products/") .permitAll()     // these should be GET call so that spring will not authorize these everytime and guest can see these pages without login
  					.antMatchers(HttpMethod.GET, "/api/cart/**") .permitAll()
-					.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-					 "/configuration/security", "/swagger-ui.html", "/webjars/**")
+					.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",     
+					 "/configuration/security", "/swagger-ui.html", "/webjars/**")                
 					.permitAll()
 	                .anyRequest()
 	                .authenticated();
@@ -52,13 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 
 	    @Autowired
 	    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+	    	log.info("Password encrypting started ");
 	        authenticationManagerBuilder.userDetailsService(userDetailsService)
-	                .passwordEncoder(passwordEncoder());
+	                .passwordEncoder(passwordEncoder());          // here we are using passwordEncoder of spring, we can also use LDAP, memory based, Database based authentication
 	    }
 
 		
-		 @Bean
+		 @Bean        // we used bean annotation because PasswordEncoder is a interface and whenver we are Autowiring this bean , we will get PasswordEncoder() object
 		 PasswordEncoder passwordEncoder() { 
+			 log.info("Password is encrypted using BCrypt Hashing algorithm ");
 			 return new BCryptPasswordEncoder();
 		 }
 		

@@ -33,5 +33,5 @@ public class User {
     private String email;
     //@NotNull
     private Instant created;
-    private boolean enabled;
+    private boolean enabled;         // this is default false, whenver user activated its account then it enables
 }

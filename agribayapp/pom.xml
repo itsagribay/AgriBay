@@ -56,7 +56,7 @@
 		
 		<dependency>          <!-- Email related dependency -->
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId> <!-- This will create a HTML template and use those templates to send the email-->
         </dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>

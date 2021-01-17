@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
+    public void addCorsMappings(CorsRegistry corsRegistry) {        // Spring CORS operation allowed from here
         corsRegistry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowedMethods("*")

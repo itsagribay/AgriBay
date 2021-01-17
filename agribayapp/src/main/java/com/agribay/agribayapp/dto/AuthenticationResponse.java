@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder                // this we generate object of the class using builder design pattern
 public class AuthenticationResponse {
     private String authenticationToken;
     private String refreshToken;

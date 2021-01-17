@@ -2,6 +2,8 @@ package com.agribay.agribayapp.service;
 
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.agribay.agribayapp.model.User;
 import com.agribay.agribayapp.repository.UserRepository;
 
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ import static java.util.Collections.singletonList;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
@@ -27,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);      // retrieve the user by username
+           // log.info("Checking whether user is present or not ---- userOptional {}:",userOptional);
         User user = userOptional
                 .orElseThrow(() -> new UsernameNotFoundException("No user " +
                         "Found with username : " + username));                // if user not found
