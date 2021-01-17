@@ -20,13 +20,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name="orders")
-@Getter
-@Setter
+@Data
 public class Order {
 
 	@Id
