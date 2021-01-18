@@ -3,6 +3,8 @@ package com.agribay.agribayapp.service;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.agribay.agribayapp.dto.Purchase;
 import com.agribay.agribayapp.dto.PurchaseResponse;
 import com.agribay.agribayapp.model.Customer;
@@ -10,6 +12,7 @@ import com.agribay.agribayapp.model.Order;
 import com.agribay.agribayapp.model.OrderItem;
 import com.agribay.agribayapp.repository.CustomerRepository;
 
+@Service
 public class CheckoutService {
 
 	private CustomerRepository customerRespository;

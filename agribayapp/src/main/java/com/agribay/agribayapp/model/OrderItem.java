@@ -37,7 +37,7 @@ public class OrderItem {
 	@Column(name="product_id")
 	private Long productId;
 	
-	@Column(name="order_id")
+	@Column(name="order_id" ,insertable = false, updatable = false)
 	private Long orderId;
 	
 	@ManyToOne

@@ -71,7 +71,7 @@ public class Order {
 	private Address shippingAddress;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "shipping_address_id",referencedColumnName = "id")
+	@JoinColumn(name = "billing_address_id",referencedColumnName = "id")
 	private Address billingAddress;
 	
 	public void add(OrderItem item)
