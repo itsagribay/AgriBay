@@ -35,15 +35,15 @@ class LoadDatabase {
 			log.info("Preloading " + userRepository.save(user1));
 			log.info("Preloading " + userRepository.save(user2));
 
-			Item item1 = new Item((long) 3, "tomato", ItemCategory.vegetables, Unit.kg, "");
-			Item item2 = new Item((long) 4, "banana", ItemCategory.fruits, Unit.dozen, "");
+			Item item1 = new Item((long) 1, "tomato", ItemCategory.vegetables, Unit.kg, "");
+			Item item2 = new Item((long) 2, "banana", ItemCategory.fruits, Unit.dozen, "");
 			log.info("Preloading " + itemRepository.save(item1));
 			log.info("Preloading " + itemRepository.save(item2));
 
-			Product product1 = new Product((long) 5, user1, "", new BigDecimal("20"), new BigDecimal("4"), "", "",
-					"some desc here", item1);
-			Product product2 = new Product((long) 6, user2, "", new BigDecimal("30"), new BigDecimal("3"), "", "",
-					"some desc here", item2);
+			Product product1 = new Product((long) 5, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+					"assets/images/products/placeholder.png", "", "some desc here", item1);
+			Product product2 = new Product((long) 6, user2, "", new BigDecimal("30"), new BigDecimal("3"),
+					"assets/images/products/placeholder.png", "", "some desc here", item2);
 			log.info("Preloading " + productRepository.save(product1));
 			log.info("Preloading " + productRepository.save(product2));
 		};
