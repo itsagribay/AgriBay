@@ -35,8 +35,8 @@ class LoadDatabase {
 			log.info("Preloading " + userRepository.save(user1));
 			log.info("Preloading " + userRepository.save(user2));
 
-			Item item1 = new Item((long) 3, "tomato", ItemCategory.vegetables, Unit.kg, "");
-			Item item2 = new Item((long) 4, "banana", ItemCategory.fruits, Unit.dozen, "");
+			Item item1 = new Item((long) 1, "tomato", ItemCategory.vegetables, Unit.kg, "");
+			Item item2 = new Item((long) 2, "banana", ItemCategory.fruits, Unit.dozen, "");
 			log.info("Preloading " + itemRepository.save(item1));
 			log.info("Preloading " + itemRepository.save(item2));
 

@@ -19,7 +19,7 @@ import com.agribay.agribayapp.service.ProductService;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
 	private final ProductService productService;
 
