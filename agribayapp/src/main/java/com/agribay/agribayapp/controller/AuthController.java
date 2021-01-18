@@ -46,7 +46,6 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
 		    log.info("1. signup process started");
-		  
 		  authService.signup(registerRequest);
 		     log.info("signup process completed");
 		  return  new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
