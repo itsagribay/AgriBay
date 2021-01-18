@@ -28,7 +28,7 @@ public class CheckoutService {
 		//generate tracking number
 		
 		String orderTrackingNumer = generateOrderTrackingNumber();
-		order.setOrderTrackingNumber(orderTrackingNumer);;
+		order.setOrderTrackingNumber(orderTrackingNumer);
 		
 		//populate order with orderItems
 		Set<OrderItem> orderItems = purchase.getOrderItems();
