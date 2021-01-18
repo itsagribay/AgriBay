@@ -37,15 +37,43 @@ class LoadDatabase {
 
 			Item item1 = new Item((long) 3, "tomato", ItemCategory.vegetables, Unit.kg, "");
 			Item item2 = new Item((long) 4, "banana", ItemCategory.fruits, Unit.dozen, "");
+			Item item3 = new Item((long) 5, "potato", ItemCategory.vegetables, Unit.kg, "");
+			Item item4 = new Item((long) 6, "apple", ItemCategory.fruits, Unit.dozen, "");
 			log.info("Preloading " + itemRepository.save(item1));
 			log.info("Preloading " + itemRepository.save(item2));
+			log.info("Preloading " + itemRepository.save(item3));
+			log.info("Preloading " + itemRepository.save(item4));
 
-			Product product1 = new Product((long) 5, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+			Product product1 = new Product((long) 7, user1, "", new BigDecimal("20"), new BigDecimal("4"),
 					"assets/images/products/placeholder.png", "", "some desc here", item1);
-			Product product2 = new Product((long) 6, user2, "", new BigDecimal("30"), new BigDecimal("3"),
+			Product product2 = new Product((long) 8, user2, "", new BigDecimal("30"), new BigDecimal("3"),
 					"assets/images/products/placeholder.png", "", "some desc here", item2);
+
+			Product product3 = new Product((long) 9, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+					"assets/images/products/placeholder.png", "", "some desc here", item2);
+			Product product4 = new Product((long) 10, user2, "", new BigDecimal("30"), new BigDecimal("3"),
+					"assets/images/products/placeholder.png", "", "some desc here", item1);
+
+			Product product5 = new Product((long) 11, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+					"assets/images/products/placeholder.png", "", "some desc here", item3);
+			Product product6 = new Product((long) 12, user2, "", new BigDecimal("30"), new BigDecimal("3"),
+					"assets/images/products/placeholder.png", "", "some desc here", item4);
+
+			Product product7 = new Product((long) 13, user1, "", new BigDecimal("20"), new BigDecimal("4"),
+					"assets/images/products/placeholder.png", "", "some desc here", item4);
+			// for product creation testing
+			// Product product8 = new Product((long) 14, user2, "", new BigDecimal("30"),
+			// new BigDecimal("3"),
+			// "assets/images/products/placeholder.png", "", "some desc here", item3);
+
 			log.info("Preloading " + productRepository.save(product1));
 			log.info("Preloading " + productRepository.save(product2));
+			log.info("Preloading " + productRepository.save(product3));
+			log.info("Preloading " + productRepository.save(product4));
+			log.info("Preloading " + productRepository.save(product5));
+			log.info("Preloading " + productRepository.save(product6));
+			log.info("Preloading " + productRepository.save(product7));
+			// log.info("Preloading " + productRepository.save(product8));
 		};
 	}
 }
