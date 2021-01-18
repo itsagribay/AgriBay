@@ -10,7 +10,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.Instant;
 
@@ -20,10 +21,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long userId;
+    private Long Id;
     @NotBlank(message = "Username is required")
     private String username;
     @NotBlank(message = "Password is required")
@@ -34,4 +36,6 @@ public class User {
     //@NotNull
     private Instant created;
     private boolean enabled;         // this is default false, whenver user activated its account then it enables
+
 }
+

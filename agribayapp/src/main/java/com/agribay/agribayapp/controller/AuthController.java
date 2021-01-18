@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import com.agribay.agribayapp.dto.AuthenticationResponse;
@@ -15,6 +18,8 @@ import com.agribay.agribayapp.service.AuthService;
 import com.agribay.agribayapp.service.RefreshTokenService;
 
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 //import jdk.internal.org.jline.utils.Log;
 
@@ -41,10 +46,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
 		    log.info("1. signup process started");
-		 authService.signup(registerRequest);
-		    log.info("signup process completed");
-		 return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
-		
+		  
+		  authService.signup(registerRequest);
+		     log.info("signup process completed");
+		  return  new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
+			    
     }
 
 	

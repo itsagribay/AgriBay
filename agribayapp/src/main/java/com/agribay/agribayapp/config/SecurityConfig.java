@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {    // this cl
 	                .authorizeRequests()
 	                .antMatchers("/api/auth/**")       // authencticate all the request which doen't match this pattern
 	                .permitAll().antMatchers(HttpMethod.GET, "/api/auth") .permitAll()
-					.antMatchers(HttpMethod.GET, "/api/products/") .permitAll()     // these should be GET call so that spring will not authorize these everytime and guest can see these pages without login
- 					.antMatchers(HttpMethod.GET, "/api/cart/**") .permitAll()
+					.antMatchers(HttpMethod.GET, "/products/*") .permitAll()     // these should be GET call so that spring will not authorize these everytime and guest can see these pages without login
+// 					.antMatchers(HttpMethod.GET, "/cart/**") .permitAll()
 					.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",     
 					 "/configuration/security", "/swagger-ui.html", "/webjars/**")                
 					.permitAll()
