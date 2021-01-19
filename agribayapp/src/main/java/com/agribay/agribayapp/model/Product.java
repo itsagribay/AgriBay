@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-
 @Entity
 @Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "seller_id", "item_id" }) })
 public class Product {
@@ -30,7 +28,7 @@ public class Product {
 
 	@ManyToOne(optional = false, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "seller_id", foreignKey = @ForeignKey(name = "seller_id"))
-	@JsonIdentityReference(alwaysAsId = true)
+	// @JsonIdentityReference(alwaysAsId = true)
 	private User seller;
 
 	@Column(length = 512, nullable = false)

@@ -80,6 +80,10 @@ public class ProductService {
 		return categories;
 	}
 
+	public Iterable<Product> getAllProductsBySeller() {
+		return productRepository.findBySeller((long) 2);
+	}
+
 	public ResponseEntity<Product> createNewProduct(ProductCreateRequest productCreateRequest) {
 		Product product = new Product();
 		Optional<User> optionalUser = userRepository.findById((long) 2);
@@ -117,4 +121,5 @@ public class ProductService {
 		Product updatedProduct = productRepository.save(product);
 		return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
 	}
+
 }

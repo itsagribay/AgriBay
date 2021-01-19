@@ -74,6 +74,12 @@ public class ProductController {
 		return productService.getAllProductCategories();
 	}
 
+	// find all products by seller
+	@GetMapping("/findBySeller")
+	public Iterable<Product> getAllProductsBySeller() {
+		return productService.getAllProductsBySeller();
+	}
+
 	// new product listing - if item already exists for that user then don't allow
 	// only patching allowed
 	@PostMapping
