@@ -34,8 +34,8 @@ public class Order {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="order_tracking_number")
-	private String orderTrackingNumber;
+	@Column(name="order_number")
+	private String orderNumber;
 	
 	@Column(name="total_quantity")
 	private int totalQuantity;
@@ -66,6 +66,7 @@ public class Order {
 		this.customer = customer;
 	}
 
+	/*
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shipping_address_id",referencedColumnName = "id")
 	private Address shippingAddress;
@@ -73,6 +74,10 @@ public class Order {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "billing_address_id",referencedColumnName = "id")
 	private Address billingAddress;
+	*/
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
+	private Address address;
 	
 	public void add(OrderItem item)
 	{

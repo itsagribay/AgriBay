@@ -23,8 +23,8 @@ public class Address {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="street")
-	private String street;
+	@Column(name="name")
+	private String name;
 	
 	@Column(name="city")
 	private String city;
@@ -32,11 +32,14 @@ public class Address {
 	@Column(name="state")
 	private String state;
 	
-	@Column(name="country")
-	private String country;
+	@Column(name="addr")
+	private String addr;
 	
-	@Column(name="zip_code")
-	private String zipCode;
+	@Column(name="phone")
+	private String phone;
+	
+	@Column(name="pin")
+	private String pin;
 	
 	@OneToOne
 	@PrimaryKeyJoinColumn

@@ -13,8 +13,8 @@ import lombok.Data;
 public class Purchase {
 
 	private Customer customer;
-	private Address shippingAddress;
-	private Address billingAddess;
+	//private Address shippingAddress;
+	private Address deliveryAddress;
 	private Order order;
 	private Set<OrderItem> orderItems;
 }
