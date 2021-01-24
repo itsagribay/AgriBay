@@ -47,7 +47,15 @@ public class AuthService {
 	@Transactional                 // transactional because it interconnects with RDBMS
 	public void signup(RegisterRequest registerRequest) {
         User user = new User();
-            log.info("2. Registration request got");                      
+
+            log.info("2. Registration request got");
+           
+//            try {
+//				Optional<user> = userRepository.findByUsername(registerRequest.getUsername());
+//			} catch (SpringAgribayException e) {
+//				// TODO Auto-generated catch block
+                      
+
         user.setUsername(registerRequest.getUsername());
             log.info("3. Username {} ",registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
@@ -66,7 +74,9 @@ public class AuthService {
 		 "please click on the below url to activate your account : " +
 		 "http://localhost:8080/api/auth/accountVerification/" + token));
 		    log.info("7. mail sent to email  {} ",registerRequest.getEmail());
-		
+
+		//}
+
 
 }
 
