@@ -9,7 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,7 +112,7 @@ public class AuthService {
        User user = userRepository.findByUsername(username).orElseThrow(() -> new  SpringAgribayException("User not found with name - " + username));
            user.setEnabled(true); 
            userRepository.save(user);
-           }
+   }
   
    
 	
@@ -131,7 +131,7 @@ public class AuthService {
               log.info("6. refresh token passed as empty string so if we performed login , we get one Json web token , one refresh token and expiry date" );
            
            return AuthenticationResponse.builder().authenticationToken(token).refreshToken(refreshTokenService.generateRefreshToken().getToken()).expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())).username(loginRequest.getUsername()).build(); 
-           }
+   }
   
 	
   // ---------------------------- Refresh token Service code ----------------------------------- 
@@ -145,12 +145,18 @@ public class AuthService {
        }
  
   
-	// ---------------------------- Saving user in Securitycontextholder code ----------------------------------- 
-  
-         public boolean isLoggedIn() {
-        	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        	 return  !(authentication instanceof AnonymousAuthenticationToken) &&  authentication.isAuthenticated(); 
-        	 }
+  // ---------------------------- Saving user in Securitycontextholder code ----------------------------------- 
+  public boolean isLoggedIn() {
+	 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	 return  !(authentication instanceof AnonymousAuthenticationToken) &&  authentication.isAuthenticated(); 
+  }
 
-	  
+  
+  // Get currently authenticated user who has made this request(i.e current request context) from SecurityContextHolder
+  public User getAuthenticatedUser() {
+	String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	Optional<User> userOptional = userRepository.findByUsername(username);
+	return userOptional
+			.orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
+  }
 }
