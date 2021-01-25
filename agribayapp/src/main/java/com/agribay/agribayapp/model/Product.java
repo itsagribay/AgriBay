@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -31,14 +30,11 @@ public class Product {
 	// @JsonIdentityReference(alwaysAsId = true)
 	private User seller;
 
-	@Column(length = 512, nullable = false)
-	private String sellerAddress;
-
 	@Column(length = 7, scale = 2, nullable = false, columnDefinition = "Decimal(7,2) default '0.00'")
 	// TODO: CONSTRAINT price_gte_0 CHECK (base_price >= 0)
 	private BigDecimal unitPrice;
 
-	@Column(length = 6, scale = 3, nullable = false, columnDefinition = "Decimal(6,3) default '0.000'")
+	@Column(length = 6, scale = 2, nullable = false, columnDefinition = "Decimal(6,2) default '0.00'")
 	// TODO: CONSTRAINT quantity_gte_0 CHECK (total_quantity >= 0)
 	private BigDecimal totalQuantity;
 
@@ -62,12 +58,11 @@ public class Product {
 		super();
 	}
 
-	public Product(Long id, User seller, String sellerAddress, BigDecimal unitPrice, BigDecimal totalQuantity,
+	public Product(Long id, User seller, BigDecimal unitPrice, BigDecimal totalQuantity,
 			String imageUrl1, String imageUrl2, String description, Item item) {
 		super();
 		this.id = id;
 		this.seller = seller;
-		this.sellerAddress = sellerAddress;
 		this.unitPrice = unitPrice;
 		this.totalQuantity = totalQuantity;
 		this.imageUrl1 = imageUrl1;
@@ -90,14 +85,6 @@ public class Product {
 
 	public void setSeller(User seller) {
 		this.seller = seller;
-	}
-
-	public String getSellerAddress() {
-		return sellerAddress;
-	}
-
-	public void setSellerAddress(String sellerAddress) {
-		this.sellerAddress = sellerAddress;
 	}
 
 	public BigDecimal getUnitPrice() {
@@ -154,7 +141,6 @@ public class Product {
 
 	@PostLoad
 	@PostPersist
-	@PostUpdate
 	private void updateTotalPrice() {
 		this.totalPrice = this.getUnitPrice().multiply(this.getTotalQuantity());
 	}

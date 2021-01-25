@@ -3,10 +3,9 @@ package com.agribay.agribayapp.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.agribay.agribayapp.dto.ProductCreateRequest;
 import com.agribay.agribayapp.dto.ProductUpdateRequest;
 import com.agribay.agribayapp.model.ItemCategory;
 import com.agribay.agribayapp.model.Product;
@@ -27,7 +27,7 @@ import com.agribay.agribayapp.service.ProductService;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
 	private final ProductService productService;
 
@@ -80,18 +80,11 @@ public class ProductController {
 		return productService.getAllProductsBySeller();
 	}
 
-	// new product listing - if item already exists for that user then don't allow
-	// only patching allowed
-	@PostMapping
-	public ResponseEntity<Product> createNewProduct(@RequestBody ProductCreateRequest productCreateRequest) {
-		return productService.createNewProduct(productCreateRequest);
-	}
-
 	// edit product listing - yeah here patch requests
-	@PatchMapping("{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable("id") long id,
-			@Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
-		return productService.updateProduct(id, productUpdateRequest);
+	@PatchMapping("/{id}")
+	public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
+			@RequestBody ProductUpdateRequest partialUpdates) {
+		return productService.updateProduct(id, partialUpdates);
 	}
 
 	// delete product listing - delete simply
@@ -99,4 +92,19 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Long id) {
 		productService.deleteProduct(id);
 	}
+
+	// create new product listing
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> createNewProduct(@RequestPart("productCreateRequest") String productCreateRequest,
+			@RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles) {
+		return productService.createNewProduct(productCreateRequest, imageFiles);
+	}
+	
+	// download the file (spring server acts as a proxy to aws)
+    @GetMapping("image/download/{sellerNameAndId}/{filename}")
+    public byte[] downloadUserProfileImage(@PathVariable("sellerNameAndId") String sellerNameAndId, 
+    									   @PathVariable("filename") String filename) {
+        return productService.downloadProductImage(sellerNameAndId, filename);
+    }
 }

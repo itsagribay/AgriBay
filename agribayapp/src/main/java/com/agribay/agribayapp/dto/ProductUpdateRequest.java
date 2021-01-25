@@ -4,20 +4,35 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
-import org.openapitools.jackson.nullable.JsonNullable;
-
 public class ProductUpdateRequest {
 	@NotNull
-	private JsonNullable<BigDecimal> unitPrice = JsonNullable.undefined();
+	private BigDecimal unitPrice;
 
 	@NotNull
-	private JsonNullable<BigDecimal> totalQuantity = JsonNullable.undefined();
+	private BigDecimal totalQuantity;
 
-	public JsonNullable<BigDecimal> getTotalQuantity() {
+	private String description;
+
+	public ProductUpdateRequest() {
+		super();
+	}
+
+	public ProductUpdateRequest(@NotNull BigDecimal unitPrice, @NotNull BigDecimal totalQuantity, String description) {
+		super();
+		this.unitPrice = unitPrice;
+		this.totalQuantity = totalQuantity;
+		this.description = description;
+	}
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public BigDecimal getTotalQuantity() {
 		return totalQuantity;
 	}
 
-	public JsonNullable<BigDecimal> getUnitPrice() {
-		return unitPrice;
+	public String getDescription() {
+		return description;
 	}
 }
