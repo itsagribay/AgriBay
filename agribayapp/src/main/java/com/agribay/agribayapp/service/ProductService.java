@@ -85,7 +85,8 @@ public class ProductService {
 	}
 
 	public Iterable<Product> getAllProductsBySeller() {
-		return productRepository.findBySeller((long) 2);
+		User seller = authService.getAuthenticatedUser();
+		return productRepository.findBySeller(seller.getId());
 	}
 
 	public void deleteProduct(Long id) {

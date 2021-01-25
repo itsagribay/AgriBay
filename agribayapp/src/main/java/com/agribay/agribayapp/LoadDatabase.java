@@ -1,24 +1,24 @@
-package com.agribay.agribayapp;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import com.agribay.agribayapp.repository.ItemRepository;
-import com.agribay.agribayapp.repository.ProductRepository;
-import com.agribay.agribayapp.repository.UserRepository;
-
-@Configuration
-class LoadDatabase {
-	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-
-	@Bean
-	CommandLineRunner initDatabase(UserRepository userRepository, ItemRepository itemRepository,
-			ProductRepository productRepository) {
-
-		return args -> {
+//package com.agribay.agribayapp;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.boot.CommandLineRunner;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//
+//import com.agribay.agribayapp.repository.ItemRepository;
+//import com.agribay.agribayapp.repository.ProductRepository;
+//import com.agribay.agribayapp.repository.UserRepository;
+//
+//@Configuration
+//class LoadDatabase {
+//	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+//
+//	@Bean
+//	CommandLineRunner initDatabase(UserRepository userRepository, ItemRepository itemRepository,
+//			ProductRepository productRepository) {
+//
+//		return args -> {
 //			User user1 = new User();
 //			User user2 = new User();
 //			user1.setId((long) 1);
@@ -28,8 +28,6 @@ class LoadDatabase {
 //			log.info("Preloading " + userRepository.save(user1));
 //			log.info("Preloading " + userRepository.save(user2));
 //
-//			Item item1 = new Item((long) 1, "tomato", ItemCategory.vegetables, Unit.kg, "");
-//			Item item2 = new Item((long) 2, "banana", ItemCategory.fruits, Unit.dozen, "");
 //			Item item3 = new Item((long) 3, "potato", ItemCategory.vegetables, Unit.kg, "");
 //			Item item4 = new Item((long) 4, "apple", ItemCategory.fruits, Unit.dozen, "");
 //			log.info("Preloading " + itemRepository.save(item1));
@@ -65,6 +63,6 @@ class LoadDatabase {
 //			log.info("Preloading " + productRepository.save(product6));
 //			log.info("Preloading " + productRepository.save(product7));
 			// log.info("Preloading " + productRepository.save(product8));
-		};
-	}
-}
+//		};
+//	}
+//}
