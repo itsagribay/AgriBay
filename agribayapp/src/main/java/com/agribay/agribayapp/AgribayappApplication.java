@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import com.agribay.agribayapp.config.SwaggerConfiguration;
 
 @SpringBootApplication
-@EnableAsync       // This will run mail sending functionality asynchronusly
+@EnableAsync // This will run mail sending functionality asynchronously
 @Import(SwaggerConfiguration.class)
 public class AgribayappApplication {
 

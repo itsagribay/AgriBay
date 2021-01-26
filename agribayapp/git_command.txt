@@ -114,3 +114,8 @@ C:\Users\anura\Student_Details\Anurag Cdac Classes\Project\Agribay\Agribay_maste
 ng generate module app-routing --flat --module=app
 
 - ng g c componentName             // command to create component
+
+
+
+
+          client ----------------------------> service
