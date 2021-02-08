@@ -5,4 +5,6 @@ Low Level Design (Excel sheet): https://docs.google.com/spreadsheets/d/1kz-K9-Mn
 
 Project Docs: https://docs.google.com/document/d/1dGwzSrr6DzXbjPysUfFXYF2jrM7H_slP_uY73m93mgc/edit?pli=1
 
-VOILA
+Daily SCRUM: https://docs.google.com/spreadsheets/d/19VU2p9mmRDMEsh7HV_7_q9e75NGJ0ivoKXaBnE8PJ10/edit?usp=sharing
+
+Final Project Docs (as per format by CDAC): https://docs.google.com/document/d/1UMFuCqwN7ui2OV21yoEyQOcsSfcpuV3LS_w80Dm7-yM/edit?usp=sharing
