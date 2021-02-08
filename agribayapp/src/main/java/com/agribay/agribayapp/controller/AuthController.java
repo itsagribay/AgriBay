@@ -14,6 +14,7 @@ import com.agribay.agribayapp.dto.AuthenticationResponse;
 import com.agribay.agribayapp.dto.LoginRequest;
 import com.agribay.agribayapp.dto.RefreshTokenRequest;
 import com.agribay.agribayapp.dto.RegisterRequest;
+import com.agribay.agribayapp.model.User;
 import com.agribay.agribayapp.service.AuthService;
 import com.agribay.agribayapp.service.RefreshTokenService;
 
@@ -52,6 +53,12 @@ public class AuthController {
 		  return  new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
 			    
     }
+	
+	
+//	private AuthController( AuthService authService, RefreshTokenService refreshTokenService  ) {
+//		this.refreshTokenService = refreshTokenService;
+//		this.authService = authService;
+//	}
 
 	
 	 @GetMapping("accountVerification/{token}")     
@@ -78,5 +85,13 @@ public class AuthController {
 	  public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
 		  refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
 		     log.info("logout happens and refresh token deleted");
-		  return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!!"); }
+		  return ResponseEntity.status(HttpStatus.OK).body("Refresh Token Deleted Successfully!!"); 
+		  }
+	  
+	  @CrossOrigin( origins = "http://localhost:4200")
+	  @PostMapping("/user/profile")
+	  public User getUserByUserName(@RequestParam("username") String username) {
+		  log.info("/user reached" + authService.getAuthenticatedUser());
+		  return authService.getAuthenticatedUser();
+	  }
 	 }

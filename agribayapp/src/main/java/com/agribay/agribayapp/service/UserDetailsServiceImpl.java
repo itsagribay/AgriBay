@@ -45,4 +45,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return singletonList(new SimpleGrantedAuthority(role));   // we provide authority to the user
     }
+    
+    
+    // saving user detail to db
+    @Transactional
+    public void saveUserDetail(User user) {
+    	log.info("UserDetailsServiceImpl:" + user.toString());
+    	
+    }
+    
 }

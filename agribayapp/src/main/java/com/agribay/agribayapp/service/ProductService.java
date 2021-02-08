@@ -117,6 +117,7 @@ public class ProductService {
 			product.setDescription(productCreateRequest.getDescription());
 			product.setImageUrl1(imageUrls[0]);
 			product.setImageUrl2(imageUrls[1]);
+			
 			Optional<Item> optionalItem = itemRepository.findById(productCreateRequest.getItemId());
 			if (optionalItem.isPresent()) {
 				product.setItem(optionalItem.get());
