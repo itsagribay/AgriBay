@@ -33,6 +33,6 @@ public class User {
 	private String email;
 	// @NotNull
 	private Instant created;
-	private boolean enabled; // this is default false, whenver user activated its account then it enables
+	private boolean enabled; // this is default false, whenever user activated its account then it enables
 
 }
